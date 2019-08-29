@@ -1,0 +1,86 @@
+pragma solidity ^0.5.1;
+
+contract example{
+/*
+    // data
+    string value_string1 = "10";   //MEMORY
+    string value_string2;
+    string value_string3;
+    string value_string4;
+    
+    uint value_uint1 = 10;
+    // value_string1와 value_uint1 데이터는 다름.
+    bool value_bool1 = true;
+    bool value_bool2 = false;
+    
+    mapping (string => uint) variable_name; // 중요!!!
+    
+    string[] string_array1;
+    uint[] uint_array1;
+    
+    // 호이스팅
+    mapping (uint => C) variable_name3;
+    mapping (string => C) variable_name4;
+
+    // 클래스, 객체명은 암묵적인 규칙으로 첫문자는 대문자로
+    struct PersonInfo{
+        string name;
+        uint age;
+        string person_address;
+    }
+
+    struct C {
+        string sender;
+        string receiver;
+        string contents;
+        uint timestemp;
+    }
+    
+    C c1 = C({sender:"j", receiver:"p", contents:"test", timestemp:123456798});
+    C c2 = C({sender:"j", receiver:"p", contents:"test", timestemp:123456798});
+
+    mapping (address => string[]) variable_name1;
+    mapping (address => uint[]) variable_name2;
+    
+    // function - save
+    function f(string memory a) public {
+        value_string1 = a;
+    }
+
+    // function - search - no use tx
+    function getF() view public returns(uint, string memory) {
+        return (10, value_string1);
+    }
+*/
+    address public admin;
+    
+    // contract info
+    struct Person {
+        string name;
+        uint age;
+        string status;
+    }
+    
+    modifier adminCheck(){
+        require(msg.sender == admin); // if false end(rollback) if true 진행
+        _;
+    }
+    
+    // 생성자
+    constructor () public {
+        admin = msg.sender;
+    }
+
+    mapping (address => Person) public map;
+
+    // create
+    function setMap(address id, string memory n, uint a) adminCheck() public {
+        map[id] = Person({name : n, age : a, status : "wait"});
+    }
+    
+    // update
+    function updateMap(address id, string memory newStatus) adminCheck() public {
+        map[id].status = newStatus;
+    }
+
+}

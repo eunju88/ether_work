@@ -1,0 +1,46 @@
+{
+  "name": "ethereum",
+  "engine": {
+    "authorityRound": {
+      "params": {
+        "blockReward": "0x4563918244F40000",
+        "stepDuration": "5",
+        "validators": {
+          "list": [
+	   "0x29ef88afd2a0dd81e79879229dbc92eac00c8367",
+	   "0x8d64c52cbb48e48bb75ab7b418b57704db25f693",
+	   "0xb9ee9a830294e28984cf6f0eca944f1d9ba96ee5",
+	   "0xd668fd937ebd4e54eb21369e4a78d7284c8ab6a2"          
+          ]
+        }
+      }
+    }
+  },
+  "params": {
+    "gasLimitBoundDivisor": "0x400",
+    "maximumExtraDataSize": "0x20",
+    "minGasLimit": "0x1388",
+    "networkID": "0x2323",
+    "eip155Transition": 0,
+    "validateChainIdTransition": 0,
+    "eip140Transition": 0,
+    "eip211Transition": 0,
+    "eip214Transition": 0,
+    "eip658Transition": 0
+  },
+  "genesis": {
+    "seal": {
+      "authorityRound": {
+        "step": "0x0",
+        "signature": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    "difficulty": "0x100000000000001201021020120102100000",
+    "gasLimit": "0x2625A00"
+  },
+  "accounts": {
+    "0x0xd668fd937ebd4e54eb21369e4a78d7284c8ab6a2": {
+      "balance": "1000000000000000000000000"
+    }
+  }
+}

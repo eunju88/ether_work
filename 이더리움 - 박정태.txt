@@ -1,0 +1,253 @@
+geth - go ethereum 2010 -> 마이닝 -> 학습용, parity 접속용, 무거움(불안정) -> 튕김
+parity -> rust -> 마이닝x -> 프로덕션 -> 안정적
+
+노드운영 -> 서버운영
+
+- 최근 이슈
+libra
+stable coin -> 국가에서 지정한 조폐공사(금, 화폐)
+
+- 터미널 명령어
+cls
+화면 지우기
+dir
+디렉터리(폴더), 파일 리스트 조회
+cd
+이동(linux, mac 에서도 사용 - unix 계열. 파일 시스템 기반, 1970년도에 나옴, C언어 탄생)
+ipconfig
+IP 주소 확인
+
+window + E 윈도우 탐색기
+window + R 실행
+notepad : 메모장
+mspaint : 그림판
+cals : 계산기
+
+노드운영 = 서버운영(운용) 시 중요한 것. IP, Port
+IP : Internet Protocol => 규약. 네트워크 컴퓨터를 식별하기 위해
+Port : 프로그램 식별자
+
+127.0.0.1 가상 아이피 => 내부아이피
+
+
+docker : 프로그램
+docker : 데브옵스 - 가상화 엔진
+
+oracle, mysql, radis, mongodb, mariadb
+이미 구축이 완료된 시스템을 쉽게 이동할 수 있음
+
+mkdir node1
+cd node1
+cd ..
+rm 파일명
+
+블록 500만개 기준: 10일
+
+geth=> p2p(server, client) program
+
+port: os가 할당해줌...
+
+port 매칭작업 : binding
+
+geth --datadir $PWD PORT xxxx --ipcdisable
+
+1 PC에서 다수의 노드 실행 가능
+PORT가 중요.
+
+순서
+1. 노드 폴더 생성
+2. account new 계정생성 === private key => public key => account
+3. genesis block(#0, 0번째 블록) 생성을 위한 json 파일 정의
+4. init == genesis block 생성
+
+geth --datadir $PWD account new 
+-> 계정생성(키파일 생성)
+geth --datadir $PWD init genesis.json
+geth --datadir $PWD --networkid 1234 console
+eth.getBalance('0x6383210633e0ddb71c814e9b9e590dcd9986644b')
+eth.getBalance('b3931ebc041a4ee76ec47b86e4831b4de7d31045')
+
+중요도 !!
+1. 경로 : datadir
+2. 제네시스 파일 : genesis.json 
+3. 노드를 연결할때 genesis.json 파일이 동일해야 함
+
+계정
+1fc7ffc2127b7f522266bf26312c24f6c1b8926b
+b3931ebc041a4ee76ec47b86e4831b4de7d31045
+
+해시알고리즘
+1:1 매칭 식별자(거의) private key == account
+
+keysore 저장공간 필요
+private key  저장공간 불필요
+
+거래소 -> private key => 거래소 서버 DB 저장
+거래소 보안이 취약한 이유
+
+geth 폴더 안에 
+chaindata, lightchaindata 가 있다.
+
+chaindata
+블록의 모든 정보
+
+ lightchaindata
+ - 블록의 일부 정보(transaction 제외)만 저장
+ - 최대한 용량을 적게 하기 위해 트랜젝션 데이터가 없다.
+ - Block = head + body(블록이 포함하고 있는 트랜젝션을 의미)
+ - 마이닝 => 블록을 검증하는 역할(lightchaindata 만 있으면 불가능)
+
+1 * 10^18 = 1ETH
+5.295E+21 = 5295 포인트
+
+ㅇ노드연결
+ 1. init genesis.json
+ 2. --networkid
+geth --datadir $PWD --networkid 1111 console
+geth --datadir $PWD console
+
+miner.start()
+miner.stop()
+
+- 트랜젝션 전송
+from 송신자
+to 수신자
+value 전송량
+
+eth.sendTransaction({from:'', to:'', value : 0})
+에러가 발생할 때 invalid => 전달한 데이터의 포맷이 잘못됨을 의미
+
+eth.sendTransaction({from: eth.accounts[0], to: eth.accounts[1], value : 123456789})
+-> password or unlock 에러가 뜸.
+
+personal 명령어를 확인 해보면 status 상태가 Locked로 되어있기 때문.
+-> 일정 시간이 지나면 자동으로 Lock 상태로 바뀜
+
+personal.unlockAccount(eth.accounts[0])
+-> 비밀번호 123456789
+성공하면 true
+
+잔액 조회
+eth.getBalance(eth.accounts[0])
+eth.getBalance(eth.accounts[1])
+
+트랜젝션 확인
+eth.getTransaction("0x3c36cfe2683fc6ac08a13db80436c326bd9220677ea715e7efd641c5b56ab36e")
+
+
+
+
+1. sendTransaction할 때 from에 전달하는 account의 lock 상태확인(personal 이용)
+2. personal.unlockAccount(address) 입력하면 unlock 상태로 바꿀 수있음
+
+트랜잭션(전송) 발생 => 데이터 수정요청
+트랜잭션 => 블록에 포함이 되야 정상적으로 데이터 변경이 이루어짐.
+
+geth --networkid 1234 --datadir $PWD --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" --port 30304 console
+
+geth 
+	--networkid 1234 
+버전 
+	--datadir $PWD 
+디렉터리 위치 $PWD => 현재 디렉터리
+	--rpc 
+리모트 프로시져(eth, personal 등 액션) 콜. 외부 요청 허용
+	--rpcport 8545 
+rpc 포트
+	--rpcaddr "0.0.0.0" 
+rpc 허용 ip. 0.0.0.0-> 모든 IP  여러개 넣을 때 "192.168.0.1,192.168.0.2" 내부만 허용할 경우엔 "127.0.0.1"
+	--rpccorsdomain "*" 
+다른 네트워크 접속 허용
+	--rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" 
+사용 가능한 리스트 rpc 명령어
+	--port 30304 
+네트워크 적인 포트. 노드 연결 포트
+	console
+
+* process
+address 생성
+genesis.json 생성
+genesis block 생성
+geth 접속해서 트랜잭션 발생
+address lock 해제
+마이닝
+balance 확인
+노드연결 - 다수의 노드 운용
+
+rpcport, port 다르게 실행
+pk1에서 실행
+geth --networkid 1234 --datadir $PWD --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" --port 30303 --ipcdisable console
+pk2에서 실행
+geth --networkid 1234 --datadir $PWD --rpc --rpcport 8546 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" --port 30304 --ipcdisable console
+
+pk1 에서 admin 명령어 실행 시
+> admin
+{
+  datadir: "C:\\Users\\강의실\\Desktop\\pk1",
+  nodeInfo: {
+    enode: "enode://754acb5845d5822c963b67ccc3cd46c55510fc6fd2435ea480d4cfe3613dfff8dd9c3df6c4aa580e35c87dd30d33952716c79e5a3e7dda30611f483266e91cd3@203.236.220.25:30303",
+
+pk2 에서 admin 명령어 실행 시
+> admin
+{
+  datadir: "C:\\Users\\강의실\\Desktop\\pk2",
+  nodeInfo: {
+    enode: "enode://022a529f0783706d72380ed9d5cea5351e63dc37a253cb4e33c8bb1d01a718c059424351350150dfeac6b217f794e23784531766fa3ecc2adaace77c7fb6a5e2@203.236.220.25:30304",
+
+pk2에서 pk1의 nodeInfo: 의 enode: 값을 복사
+admin.addPeer("")에 넣는다.
+
+한쪽에서 miner.start() 하면 양쪽에서 마이닝 됨
+
+0x -> 16진수
+0b -> 2진수
+0o -> 8진수
+
+pk1 디렉터리 생성
+계정하나 생성 geth --datadir $PWD account new
+genesis.json 파일 생성 - indent 정리
+제네시스 블록 생성 geth --datadir $PWD init genesis.json
+노드실행
+geth --networkid 1234 --datadir $PWD --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" --port 30303 console
+
+
+1. pk1 디렉터리 생성
+2. 계정하나 생성 geth --datadir $PWD account new3. 
+3. genesis.json 파일 생성 - indent 정리
+4. 제네시스 블록 생성 geth --datadir $PWD init genesis.json
+5. 노드실행 geth --networkid 1234 --datadir $PWD --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" --port 30303 console
+6. chrome에서 metamask 실행
+7. metamask에서 이더리움 노드접속 네트워크 선택에서 로컬호스트 8545선택
+8. 노드에 있는 계정 import 시키기
+
+
+
+private 네트워크 구축
+   geth - miner.start() -> POW 합의알고리즘을 이용하여 블록생성
+   parity -> 자동으로 마이닝 동작 -> POA
+
+4대 정도로 운용을 함.
+
+스케줄러 -> 노드가 죽었는지 살았는지 검사
+crontab
+
+CPU: 단일 프로세서 (1 core) - 병렬처리가 불가능 - 코어수가 적어서
+코어 하나당 연산능력이 매우 높음
+저장공간이 작음 64MB, 128MB
+
+Memory(RAM): CPU에서 자중 사용하는 데이터들
+8GB, 16GB
+
+저장소 512Gb, 1TB 
+VScode: 300MB
+
+연산능력 , 저장소는 반비례관계
+
+네트워크 통신 - 운영체제
+
+그래픽카드(VGA)
+   코어갯수 많음. - 병렬처리
+   해상도(1000만화소)
+
+
+32bit(4byte), 64bit(4byte) 운영체제

@@ -1,0 +1,55 @@
+database: CRUD(create, read, update, delete)
+mysql(mariadb)
+oracle
+redis
+mongodb
+
+
+블록체인 인프라 작업영역
+노드를 셋팅하고 -> 컨트랙트 배포
+
+스마트 컨트랙트 개발
+solidity
+
+dapp 개발
+클라이언트(front-end): lifecycle(앱을 실행 -> 앱이 종료될 때까지의 상태값)
+웹: html, css, javascript(react, vue, angular)
+안드로이드: java, kotlin
+IOS: swift, object-c
+
+
+서버(backend): request, response
+java - spring - 전자정부프레임워크
+python - django
+javascript - node.js
+
+
+java: 많이 사용함. 기관, 정부과제
+
+
+가져다가 사용하는 개념
+프레임워크: 프로젝트 구조가 갖춰져 있음
+라이브러리: 코드 단위, 하나의 기능
+
+
+블록체인 단점:
+1. 속도
+2. 데이터를 조회할 때 대량 리스트 조회가 불가능.
+
+
+프로그래밍 기본 개념
+변수 선언(데이터 구조)
+함수
+조건문
+반복문
+
+만들만한 것(clone) 전체를 다 한다기 보다, 중요한 부분 위주로
+지갑
+remix
+게임(살짝 비추) - 개발 난이도
+
+거래소 node.js, ejs => 러시아 오픈소스
+
+완성도 < 기술적인 부분
+
+포토폴리오는 기술적인 증명

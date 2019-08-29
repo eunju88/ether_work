@@ -1,0 +1,39 @@
+계정생성
+parity account new --keys-path $pwd/keys
+
+parity_configs 설정
+생성된 계정의 키파일에서 address 내용 복사
+- config.toml
+	mining 부분 engine_signer의 0x 뒤에 키파일 address 붙여넣기
+- genesis.json 
+	validators > list 부분의 0x 뒤에 키파일 address 붙여넣기
+	accounts 부분에 키파일 address 붙여넣기
+- nodes 파일 내용 삭제
+
+
+접속 - genesis.json 까지 자동 init
+parity --config .\config.toml --geth
+
+백그라운드로 실행
+parity --config config.toml --geth &
+
+실행한 페리티 노드로 접속(config.toml의 rpc port 번호)
+geth attach http://127.0.0.1:8545
+
+- 두개 노드 연결
+메인의(pk1) enode 복사(처음 접속 시 뜸)
+enode://0931ea89070d2839c29416de97a5fbc4365ac92b83b4bedaba3eae9fac71e40e291f07289958acf109e3c8ca9eac0c58847457cbd6af23a21a881b78906633a4@127.0.0.1:30303
+
+pk1의 다음 파일을 복사
+config.toml, genesis.json, nodes, password
+
+메인의 enode을 pk2 nodes 파일안에 붙여넣기
+
+pk2 config.toml에서 다음을 수정.
+	[mining] engine_signer 주석처리(# 붙이기)
+	[network] port 변경
+	[rpc] port 변경
+	[websockets] port 변경
+
+pk2 쉘에서 다음을 실행
+parity --config .\config.toml --geth

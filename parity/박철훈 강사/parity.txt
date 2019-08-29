@@ -1,0 +1,6 @@
+- parity 설치
+https://github.com/paritytech/parity-ethereum/releases/tag/v2.5.5
+
+
+- account 생성
+parity account new --keys-path "C:\ethereum\parity\keys"

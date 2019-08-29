@@ -1,0 +1,13 @@
+geth --datadir "C:\ethereum\data" account new
+
+geth --datadir "C:\ethereum\data" account list
+
+=> °°Àº°Å
+geth --datadir "C:\ethereum\data" init "C:\ethereum\CustomGenesis.json"
+
+geth --datadir $PWD init "C:\ethereum\CustomGenesis.json"
+
+geth --identity "PrivateNetwork" --datadir "c:\ethereum\data" --port "30303"  --rpc --rpcaddr 0.0.0.0  --rpcport  "8123"  --rpccorsdomain  "*"  --nodiscover  --networkid  1900  --nat  "any"  --rpcapi  "db, eth, net, web3, miner"  console
+
+
+docker pull pjt3591oo/ethereum-geth:1.90

@@ -1,0 +1,56 @@
+Secure Time Stamping
+- 코인에서 중요한 개념
+
+Block = ledger
+
+PBFT
+
+http://security7218.org/ko/
+
+https://github.com/ethereum/go-ethereum
+
+https://github.com/trustfarm-dev/TFAcademy
+
+EJT 코인 컨트렉트
+0xd8329c54e09a2baafb56828e0ba0fed1d37713de
+
+- ethereum build 하기
+
+sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo apt-get install ethereum
+sudo apt-get install -y build-essential
+
+- go lang이 없을 경우
+sudo apt install golang
+
+/go-ethereum 폴더에서 make geth
+
+./build/bin/geth 했을 때 정상 실행되면 OK
+
+- ethereum 다른 버전으로 build 하기
+
+git checkout 버전 확인
+/go-ethereum 폴더에서 git log
+(head) 표시되어 있는게 현재 버전
+
+git checkout 버전 으로 변경(버전은 풀 버전으로 써도 되고, 앞에 6~7자리만 쳐도 됨)
+https://github.com/ethereum/go-ethereum 에서 commits 에서 commit 버전 확인 가능.
+
+make geth 다시 실행하면 해당 버전으로 변경됨.
+./build/bin/geth --version | less 하면 쉽게 확인
+
+
+
+- version 코멘트 수정
+go-ethereum/params/에 vi version.go
+const VersionMeta에서 코멘트 입력 후 저장
+다시 make geth 실행한 뒤 version 확인 한다면 코멘트가 보임.
+
+
+https://web3js.readthedocs.io/en/v1.2.1/web3-eth.html#sendtransaction
+
+web3.eth.getTransactionCount("0x0c7a4D71DB35451c80bBB03eaf24549897b99cdA").then(console.log);
+
+
+web3.eth.getTransactionCount("0x0c7a4D71DB35451c80bBB03eaf24549897b99cdA").then(console.log);
